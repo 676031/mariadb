@@ -232,7 +232,8 @@ module MariaDBCookbook
     # build the platform string that makes up the final component of the yum repo URL
     def yum_repo_platform_string
       release = yum_releasever
-      "#{node['platform']}#{release}-#{node['kernel']['machine'] == 'x86_64' ? 'amd64' : '$basearch'}"
+      platform = platform?('oracle') ? 'centos' : node['platform']
+      "#{platform}#{release}-#{node['kernel']['machine'] == 'x86_64' ? 'amd64' : '$basearch'}"
     end
 
     # on amazon use the RHEL 6 packages. Otherwise use the releasever yum variable
